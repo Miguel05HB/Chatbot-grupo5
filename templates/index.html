@@ -1,164 +1,316 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ChatBot - Grupo 5</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
     <style>
-        body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background-color: #f5f5f5;
-            padding: 20px;
-        }
+      body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        background-color: #f5f5f5;
+        padding: 20px;
+      }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+      }
 
-        #chat-container {
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: 0 auto;
-        }
+      #chat-container {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+      }
 
-        #chat-display {
-            padding: 15px;
-            height: 300px;
-            overflow-y: scroll;
-            border-bottom: 1px solid #ccc;
-        }
+      #chat-display {
+        padding: 15px;
+        height: 300px;
+        overflow-y: scroll;
+        border-bottom: 1px solid #ccc;
+      }
 
-        .user-message, .bot-message {
-            margin-bottom: 10px;
-        }
+      .user-message,
+      .bot-message {
+        margin-bottom: 10px;
+      }
 
-        #user-input {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background-color: #fff;
-        }
+      #user-input {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        background-color: #fff;
+      }
 
-        #user-input input {
-            flex: 1;
-            padding: 10px;
-            margin-right: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
+      #user-input input {
+        flex: 1;
+        padding: 10px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
 
-        #user-input button {
-            padding: 10px;
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+      #user-input button {
+        padding: 10px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
 
-        #user-input button:hover {
-            background-color: #45a049;
-        }
+      #user-input button:hover {
+        background-color: #45a049;
+      }
 
-        #usage-steps,
-        #usage-instructions {
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-        }
+      #usage-steps,
+      #usage-instructions {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 20px;
+        margin-top: 20px;
+      }
 
-        #usage-steps h2,
-        #usage-instructions h2 {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-        }
+      #usage-steps h2,
+      #usage-instructions h2 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+      }
 
-        #usage-steps ol {
-            margin-left: 20px;
-        }
+      #usage-steps ol {
+        margin-left: 20px;
+      }
 
-        #usage-steps p {
-            margin-top: 10px;
-            font-style: italic;
-        }
+      #usage-steps p {
+        margin-top: 10px;
+        font-style: italic;
+      }
+
+      #teach-form-container {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+        margin-top: 10px;
+      }
+
+      #teach-form-container input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      #teach-form-container button {
+        padding: 10px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      #teach-form-container button:hover {
+        background-color: #45a049;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h1>Hola! Soy Kiti</h1>
+      <h1>Hola! Soy Kiti</h1>
 
-        <div class="row">
-            <div class="col-md-8">
-                <!-- Chatbot Container -->
-                <div id="chat-container">
-                    <div id="chat-display"></div>
-                    <div id="user-input">
-                        <input type="text" id="user-message" placeholder="Escribe tu mensaje...">
-                        <button onclick="sendMessage()">Enviar</button>
-                    </div>
-                </div>
+      <div class="row">
+        <div class="col-md-8">
+          <!-- Chatbot Container -->
+          <div id="chat-container">
+            <div id="chat-display"></div>
+            <div id="user-input">
+              <input
+                type="text"
+                id="user-message"
+                placeholder="Escribe tu mensaje..."
+              />
+              <button onclick="sendMessage()">Enviar</button>
             </div>
-
-            <div class="col-md-4">
-                <!-- Pasos de Uso -->
-                <div id="usage-steps">
-                    <h2>Pasos para usar el Chatbot</h2>
-                    <ol>
-                        <li>Introduce tu mensaje en el cuadro de chat.</li>
-                        <li>Haz clic en el botón "Enviar" o presiona Enter para enviar el mensaje.</li>
-                        <li>Espera la respuesta del chatbot.</li>
-                    </ol>
-                    <p>Ejemplo: "Hola, como estas?"</p>
-                    <p>Ejemplo: "Me sieto triste"</p>
-                    <p>Ejemplo: "Que puedo hacer"</p>
-                    <p>Ejemplo: "Estoy enojado"</p>
-                </div>
-
-                <!-- Indicaciones de Uso -->
-                <div id="usage-instructions">
-                    <h2>Indicaciones para usar el Sistema</h2>
-                    <p>Asegúrate de formular preguntas claras y concisas para obtener mejores respuestas del chatbot.</p>
-                </div>
-            </div>
+            <!-- Nuevo contenedor para el formulario de enseñar respuesta -->
+            <div id="teach-form-container"></div>
+          </div>
         </div>
+
+        <div class="col-md-4">
+          <!-- Pasos de Uso -->
+          <div id="usage-steps">
+            <h2>Pasos para usar el Chatbot</h2>
+            <ol>
+              <li>Introduce tu mensaje en el cuadro de chat.</li>
+              <li>
+                Haz clic en el botón "Enviar" o presiona Enter para enviar el
+                mensaje.
+              </li>
+              <li>Espera la respuesta del chatbot.</li>
+              <li>
+                En todo caso el ChatBot no entiende lo que estas preguntando
+                puedes ensarle lo que va a decir.
+              </li>
+            </ol>
+            <p>Ejemplo: "Hola, como estas?"</p>
+            <p>Ejemplo: "Me sieto triste"</p>
+            <p>Ejemplo: "Que puedo hacer"</p>
+            <p>Ejemplo: "Estoy enojado"</p>
+          </div>
+
+          <!-- Indicaciones de Uso -->
+          <div id="usage-instructions">
+            <h2>Indicaciones para usar el Sistema</h2>
+            <p>
+              Asegúrate de formular preguntas claras y concisas para obtener
+              mejores respuestas del chatbot.
+            </p>
+            <p>
+              Ten en cuenta que se ha implementado una nueva funcion para que
+              puedas entrenar al ChatBot en caso no sepa exactamente lo que
+              estas preguntando.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
 
-<script>
-    function sendMessage() {
-        var userMessage = document.getElementById('user-message').value;
-        document.getElementById('user-message').value = '';
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-        var chatDisplay = document.getElementById('chat-display');
-        chatDisplay.innerHTML += '<div class="user-message">Tu: ' + userMessage + '</div>';
-
-        fetch('/get_response', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'user_message=' + encodeURIComponent(userMessage),
-        })
-        .then(response => response.json())
-        .then(data => {
-            var botResponse = data.bot_response;
-            chatDisplay.innerHTML += '<div class="bot-message">Chatbot: ' + botResponse + '</div>';
-        });
-    }
-
-    // Nueva implementacion
-    document.getElementById('user-message').addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') {
-            sendMessage();
+    <script>
+      function sendMessage() {
+        var userMessage = document.getElementById("user-message").value;
+        document.getElementById("user-message").value = "";
+        if (!userMessage.trim()) {
+          showErrorAlert("Por favor, ingresa un mensaje antes de enviar.");
+          return;
         }
-    });
-</script>
-</body>
+
+        var chatDisplay = document.getElementById("chat-display");
+        chatDisplay.innerHTML +=
+          '<div class="user-message"><strong>Tú:</strong> ' +
+          userMessage +
+          "</div>";
+
+        fetch("/get_response", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: "user_message=" + encodeURIComponent(userMessage),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            var botResponse = data.bot_response;
+            chatDisplay.innerHTML +=
+              '<div class="bot-message"><strong>Chatbot:</strong> ' +
+              botResponse +
+              "</div>";
+
+            // Si la respuesta indica "Enseñame", mostrar un formulario para enseñar al chatbot
+            if (botResponse.startsWith("Enseñame:")) {
+              var teachFormContainer = document.getElementById(
+                "teach-form-container"
+              );
+              teachFormContainer.innerHTML =
+                "<p>Chatbot: No sé la respuesta. Por favor, enséñame qué responder a esta pregunta:</p>" +
+                '<input type="text" id="respuesta_aprendida" placeholder="Escribe la respuesta...">' +
+                "<button onclick=\"teachBot('" +
+                userMessage +
+                "')\">Enviar Respuesta</button>";
+
+              // Mostrar el contenedor del formulario
+              teachFormContainer.style.display = "flex";
+            } else {
+              // Ocultar el contenedor del formulario si no es una solicitud de enseñar
+              document.getElementById("teach-form-container").style.display =
+                "none";
+            }
+          });
+      }
+
+      function teachBot(userMessage) {
+        var respuestaAprendida = document.getElementById(
+          "respuesta_aprendida"
+        ).value;
+        if (!respuestaAprendida.trim()) {
+          showErrorAlert("Por favor, ingresa una respuesta antes de enviar.");
+          return;
+        }
+
+        fetch("/teach_bot", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body:
+            "user_message=" +
+            encodeURIComponent(userMessage) +
+            "&respuesta_aprendida=" +
+            encodeURIComponent(respuestaAprendida),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === "success") {
+              // Mostrar alerta de éxito en lugar del mensaje
+              showSuccessAlert(
+                "¡Gracias! La respuesta ha sido aprendida. Vuelve a preguntar por favor."
+              );
+
+              // Ocultar el formulario después de unos segundos
+              setTimeout(function () {
+                document.getElementById("teach-form-container").style.display =
+                  "none";
+              }, 2000);
+
+              // Mostrar el contenedor del formulario principal para seguir preguntando
+              document.getElementById("user-input").style.display = "flex";
+            } else {
+              // Mostrar alerta de error si no se pudo aprender la respuesta
+              showErrorAlert(
+                "Hubo un error al aprender la respuesta. Por favor, inténtalo de nuevo."
+              );
+            }
+          });
+      }
+
+      function showErrorAlert(message) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: message,
+        });
+      }
+
+      function showSuccessAlert(message) {
+        Swal.fire({
+          icon: "success",
+          title: "Éxito",
+          text: message,
+        });
+      }
+
+      document
+        .getElementById("user-message")
+        .addEventListener("keydown", function (e) {
+          if (e.key === "Enter") {
+            sendMessage();
+          }
+        });
+    </script>
+  </body>
 </html>
